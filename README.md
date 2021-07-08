@@ -27,7 +27,7 @@ You may be wondering why it's necessary to calculate churn rate. Naturally, you'
 
 Well, it's important because it costs more to acquire new customers than it does to retain existing customers. In fact, an increase in customer retention of just 5% can create at least a 25% increase in profit. This is because returning customers will likely spend 67% more on your company's products and services. As a result, your company can spend less on the operating costs of having to acquire new customers. You don't need to spend time and money on convincing an existing customer to select your company over competitors because they've already made that decision.
 
-Again, it might seem like a 5% churn rate is solid and healthy. You can still make a vast revenue with that churn rate. However, consider the example below when thinking about the impact of your churn rate.
+Again, it might seem like a 5% churn rate is solid and healthy. You can still make a vast revenue with that churn rate.
 
 
 ## How to run?
