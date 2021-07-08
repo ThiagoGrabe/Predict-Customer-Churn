@@ -1,0 +1,16 @@
+name: mlopsP1
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - ipython=7.21.0
+  - notebook=6.2.0
+  - jupyterlab=3.0.10
+  - matplotlib=3.3.4
+  - pandas=1.2.4
+  - pip
+  - seaborn
+  - scikit-learn=0.22
+  - shap
+  - pylint
+  - autopep8
