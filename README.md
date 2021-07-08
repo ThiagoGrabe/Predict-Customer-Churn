@@ -51,7 +51,8 @@ ipython script_name.py
 
 There are some parameters that may be modified in the file `config.json`.
 
-* save_folder: Folder to save the images
+* plot_eda_folder: Folder to save the exploratory analysis images
+* plot_results_folder: Folder to save the results and analysis images
 * model_folder: FOlder to save and load models
 * rfc_model: Random Forest model name
 * lgm_model: Logistic Regression model name
@@ -75,20 +76,20 @@ The entire logs can be found in the `logs`folder to track the testing script.
 As a reference, the follwoing results were found
 
 #### Feature Engineering Step
-![Heatmap](/images/Heatmap.png)
+![Heatmap](/images/eda/Heatmap.png)
 
 
 #### ROC Curve
-![ROC Curve](/images/ROC_Curve.png)
+![ROC Curve](/images/results/ROC_Curve.png)
 
 #### Feature Importance
-![Feature Importance](/images/Feature_Importance.png)
+![Feature Importance](/images/results/Feature_Importance.png)
 
 #### Shap Values
-![Shap](/images/Shap_Values.png)
+![Shap](/images/results/Shap_Values.png)
 
 #### Model Scores
-![Shap](/images/Logistic_Regression_Report.png)
-![Shap](/images/Random_Forest_Report.png)
+![Shap](/images/results/Logistic_Regression_Report.png)
+![Shap](/images/results/Random_Forest_Report.png)
 
 
