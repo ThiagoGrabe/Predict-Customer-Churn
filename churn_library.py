@@ -1,5 +1,19 @@
+# -*- coding: utf-8 -*-
 """
-Churn Library
+Author:  Thiago Meireles Grabe
+Date:    08-July-2021
+Repository: https://github.com/ThiagoGrabe/Predict-Customer-Churn
+
+This script provides all functions for churn library. This code is part of an analysis of a Kaggle dataset and more information may be found in the README.md in the git repository.
+
+The module consists of the core code of the churn library:
+- Data Import
+- Data Preparation
+- Exploratory Analysis & Plots
+- Encoder for Categorical Columns
+- Feature Engineering
+- Model Training, Saving and Import
+- Model Evaluation & Plots 
 """
 import os
 import json
@@ -29,8 +43,9 @@ config = open(os.path.join(ABS_PATH, 'config.json'))
 config = json.load(config)
 
 # Path from config file
+plot_res_folder  = os.path.join(ABS_PATH, config['plot_results_folder'])
+plot_eda_folder  = os.path.join(ABS_PATH, config['plot_eda_folder'])
 data_folder  = os.path.join(ABS_PATH, config['data_folder'])
-plot_folder  = os.path.join(ABS_PATH, config['save_folder'])
 model_folder = os.path.join(ABS_PATH, config['model_folder'])
 data_file    = config['data_file']
 
@@ -89,23 +104,19 @@ def plot_eda(df):
     '''
     plt.figure(figsize=(20, 10))
     df['Churn'].hist()
-    plt.savefig(plot_folder + '/churn_hist.png')
-
+    plt.savefig(os.path.join(plot_eda_folder, 'churn_hist.png'))
     plt.figure(figsize=(20, 10))
     df['Customer_Age'].hist()
-    plt.savefig(plot_folder + '/Customer_Age_hist.png')
-
+    plt.savefig(os.path.join(plot_eda_folder, 'Customer_Age_hist.png'))
     plt.figure(figsize=(20, 10))
     df['Marital_Status'].value_counts('normalize').plot(kind='bar')
-    plt.savefig(plot_folder + '/Marital_status.png')
-
+    plt.savefig(os.path.join(plot_eda_folder, 'Marital_status.png'))
     plt.figure(figsize=(20, 10))
     sns.distplot(df['Total_Trans_Ct'])
-    plt.savefig(plot_folder + '/Total_Trans.png')
-
+    plt.savefig(os.path.join(plot_eda_folder, 'Total_Trans.png'))
     plt.figure(figsize=(20, 10))
     sns.heatmap(df.corr(), annot=False, cmap='Dark2_r', linewidths=2)
-    plt.savefig(plot_folder + '/Heatmap.png')
+    plt.savefig(os.path.join(plot_eda_folder, 'Heatmap.png'))
 
 
 def perform_eda(df):
@@ -189,7 +200,7 @@ def classification_report_image(y_train,
     plt.text(0.01, 0.6, str('Random Forest Test'), {'fontsize': 10}, fontproperties = 'monospace')
     plt.text(0.01, 0.7, str(classification_report(y_train, y_train_preds_rf)), {'fontsize': 10}, fontproperties = 'monospace')
     plt.axis('off')
-    plt.savefig(plot_folder + '/Random_Forest_Report.png')
+    plt.savefig(plot_res_folder + '/Random_Forest_Report.png')
     # Clear plot to start new ones
     plt.clf()
     plt.rc('figure', figsize=(5, 5))
@@ -198,9 +209,9 @@ def classification_report_image(y_train,
     plt.text(0.01, 0.6, str('Logistic Regression Test'), {'fontsize': 10}, fontproperties = 'monospace')
     plt.text(0.01, 0.7, str(classification_report(y_train, y_train_preds_lr)), {'fontsize': 10}, fontproperties = 'monospace') # approach improved by OP -> monospace!
     plt.axis('off')
-    plt.savefig(plot_folder + '/Logistic_Regression_Report.png')
+    plt.savefig(plot_res_folder + '/Logistic_Regression_Report.png')
 
-def feature_importance_plot(model, X_data, output_pth=plot_folder):
+def feature_importance_plot(model, X_data, output_pth=plot_res_folder):
     '''
     creates and stores the feature importances in pth
     input:
@@ -280,13 +291,13 @@ def train_models(X_train, X_test, y_train, y_test):
 
     # Saving ROC Curves for LR models
     lrc_plot = plot_roc_curve(lrc, X_test, y_test)
-    plt.savefig(plot_folder + '/Logistic_Regresssion_ROC_Curve.png')
+    plt.savefig(os.path.join(plot_res_folder, 'Logistic_Regresssion_ROC_Curve.png'))
     # Combined Plots
     plt.figure(figsize=(15, 8))
     ax = plt.gca()
     plot_roc_curve(cv_rfc.best_estimator_, X_test, y_test, ax=ax, alpha=0.8)
     lrc_plot.plot(ax=ax, alpha=0.8)
-    plt.savefig(plot_folder + '/ROC_Curve.png')
+    plt.savefig(os.path.join(plot_res_folder, 'ROC_Curve.png'))
 
     # Clear plot to start new ones
     plt.clf()
@@ -302,7 +313,7 @@ def train_models(X_train, X_test, y_train, y_test):
     # Clear plot to start new ones
     plt.clf()
 
-    feature_importance_plot(model=rfc_model, X_data=X_test, output_pth=plot_folder)
+    feature_importance_plot(model=rfc_model, X_data=X_test, output_pth=plot_res_folder)
     classification_report_image(y_train=y_train.values,
                                 y_test=y_test.values,
                                 y_train_preds_lr=y_train_preds_lr,

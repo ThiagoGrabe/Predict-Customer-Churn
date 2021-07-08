@@ -1,4 +1,5 @@
-{"save_folder" : "images",
+{"plot_results_folder" : "images/results",
+"plot_eda_folder"  : "images/eda",
  "model_folder": "models",
  "rfc_model"   : "rfc_model.pkl",
  "lgm_model"   : "logistic_model.pkl",

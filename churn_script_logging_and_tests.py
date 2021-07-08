@@ -1,3 +1,20 @@
+# -*- coding: utf-8 -*-
+"""
+Author:  Thiago Meireles Grabe
+Date:    08-July-2021
+Repository: https://github.com/ThiagoGrabe/Predict-Customer-Churn
+
+This script test all functions from 'churn_library.py' in order to keep the library well designed and achieving high code quality. This code is part of an analysis of a Kaggle dataset and more information may be found in the README.md in the git repository.
+
+The module test the following functions in churn library:
+- Data Import
+- Data Preparation
+- Exploratory Analysis & Plots
+- Encoder for Categorical Columns
+- Feature Engineering
+- Model Training, Saving and Import
+- Model Evaluation & Plots 
+"""
 from copy import Error
 import os
 import json
@@ -21,10 +38,11 @@ config = open(os.path.join(ABS_PATH, 'config.json'))
 config = json.load(config)
 
 # Path from config file
-data_folder = os.path.join(ABS_PATH, config['data_folder'])
-plot_folder = os.path.join(ABS_PATH, config['save_folder'])
+plot_res_folder  = os.path.join(ABS_PATH, config['plot_results_folder'])
+plot_eda_folder  = os.path.join(ABS_PATH, config['plot_results_folder'])
+data_folder  = os.path.join(ABS_PATH, config['data_folder'])
 model_folder = os.path.join(ABS_PATH, config['model_folder'])
-data_file = config['data_file']
+data_file    = config['data_file']
 
 # Categorical Columns and response variable to test
 cat_columns = config['cat_columns']
@@ -39,7 +57,12 @@ sample_fraction = float(config['sample_fraction'])
 
 def test_import(import_data):
     '''
-    test data import
+    test import_data function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     try:
         df = import_data(os.path.join(data_folder, data_file))
@@ -57,7 +80,12 @@ def test_import(import_data):
 
 def test_create_churn(create_churn):
     '''
-    test creating the column creating churn column
+    test create_churn function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     try:
@@ -92,7 +120,12 @@ def test_create_churn(create_churn):
 
 def test_plot_eda(plot_eda):
     '''
-    test perform eda function
+    test plot_eda function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     df = cls.create_churn(df)
@@ -105,9 +138,21 @@ def test_plot_eda(plot_eda):
             "Plot columns: Plot Columns column was not found. Possible Columns: " + str(df.columns))
         raise err
 
+    try:
+        plot_eda(df=df)
+        logging.info("Plot EDA: SUCCESS")
+    except Error as err:
+        logging.error("Plot EDA: Fail to plot exploratory analysis images.")
+        raise err
+
 def test_eda(perform_eda):
     '''
-    test perform eda function
+    test perform_eda function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     df = cls.create_churn(df)
@@ -122,7 +167,12 @@ def test_eda(perform_eda):
 
 def test_encoder_helper(encoder_helper):
     '''
-    test encoder helper
+    test encoder_helper function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     df = cls.create_churn(df)
@@ -162,7 +212,12 @@ def test_encoder_helper(encoder_helper):
 
 def test_perform_feature_engineering(perform_feature_engineering):
     '''
-    test perform_feature_engineering
+    test perform_feature _engineering function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     df = cls.create_churn(df)
@@ -211,7 +266,12 @@ def test_perform_feature_engineering(perform_feature_engineering):
 
 def test_train_models(train_models):
     '''
-    test train_models
+    test train_models function from churn module
+    input:
+            import_data: python function
+
+    output:
+            None
     '''
     df = cls.import_data(os.path.join(data_folder, data_file))
     df = cls.create_churn(df)
@@ -230,7 +290,7 @@ def test_train_models(train_models):
         df=df, response=response_string, test_size=test_size, random_state=random_state)
 
     try:
-        cls.train_models(
+        train_models(
             X_train=X_train,
             X_test=X_test,
             y_train=y_train,
